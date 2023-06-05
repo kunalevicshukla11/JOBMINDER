@@ -12,7 +12,6 @@ import errorHandlerMiddleware from './middleware/error-handler.js'
 
 
 
-
 app.get('/',(req,res)=>{
     
     res.send('Welcome')

@@ -2,6 +2,9 @@ import mongoose from "mongoose"
 
 import validator from "validator"
 
+import bcrypt from 'bcryptjs'
+
+
 const UserSchema = new mongoose.Schema({
    name: {
     type: String,
@@ -38,6 +41,11 @@ const UserSchema = new mongoose.Schema({
     trim:true,
     default: 'my city',
    },
+})
+
+UserSchema.pre('save',async function(){
+    const salt = await bcrypt.genSalt(10)
+    this.password = await bcrypt.hash(this.password, slat)
 })
 
 export default mongoose.model('User', UserSchema)

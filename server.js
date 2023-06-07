@@ -25,8 +25,8 @@ app.get('/api/v1',(req,res)=>{
     res.json({msg:'APi!'})
 })
 
-app.get('/api/v1/auth', authRouter)
-app.get('/apt/v1/jobs', jobsRouter)
+app.use('/api/v1/auth', authRouter)
+app.use('/api/v1/jobs', jobsRouter)
 
 
 app.use(notFoundMiddleware)

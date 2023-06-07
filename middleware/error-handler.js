@@ -12,7 +12,8 @@ const errorHandlerMiddleware = (err,req,res,next)=>{
         // defaultError.msg = err.message
 
         defaultError.msg = Object.values(err.errors)
-        .map((item)=>item.message).join(',')
+        .map((item)=>item.message)
+        .join(',')
     }
     if(err.code && err.code === 11000){
         defaultError.statusCode = StatusCodes.BAD_REQUEST

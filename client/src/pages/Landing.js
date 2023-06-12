@@ -27,7 +27,7 @@ const Landing = () => {
                 </Link>
 
             </div>
-            <img src={main} alt="job hunt" className='img img-main'/>
+            <img src={main} alt="job hunt" className='img main-img'/>
         </div>
      </Wrapper>
   )

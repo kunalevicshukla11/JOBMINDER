@@ -14,7 +14,12 @@ import {
     LOGOUT_USER,
     UPDATE_USER_BEGIN,
     UPDATE_USER_SUCCESS,
-    UPDATE_USER_ERROR
+    UPDATE_USER_ERROR,
+    HANDLE_CHANGE,
+    CLEAR_VALUES,
+    CREAT_JOB_BEGIN,
+     CREAT_JOB_SUCCESS,
+     CREAT_JOB_ERROR
 } from "./actions"
 
 import { initialState } from "./appContext"
@@ -162,6 +167,59 @@ const reducer =(state,action)=>{
             showAlert:true,
             alertType: 'danger',
             alertText: action.payload.msg,
+        }
+    }
+
+    if(action.type===HANDLE_CHANGE){
+        return {
+            ...state,
+            [action.payload.name]:action.payload.value,
+        }
+    }
+
+    
+
+    if(action.type===CLEAR_VALUES){
+        const initialState ={
+            isEditing:false,
+            editJobId:'',
+            position:'',
+            company:'',
+            jobLocation:state.userLocation||'',
+            
+            jobType:'full-time',
+            
+            status:'pending',
+            }
+
+        return {
+            ...state,
+            ...initialState,
+            
+        }
+    }
+
+    if(action.type===CREAT_JOB_BEGIN){
+        return {...state,isLoading:true}
+    }
+
+    if(action.type===CREAT_JOB_SUCCESS){
+        return {
+            ...state,
+            isLoading:false,
+            showAlert:true,
+            alertType: 'success',
+            alertText: 'New Job Created'
+        }
+    }
+
+    if(action.type===CREAT_JOB_ERROR){
+        return {
+            ...state,
+            isLoading:false,
+            showAlert:true,
+            alertType: 'danger',
+            alertText: action.payload.msg
         }
     }
 

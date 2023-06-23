@@ -24,7 +24,9 @@ import {
      CLEAR_VALUES,
      CREAT_JOB_BEGIN,
      CREAT_JOB_SUCCESS,
-     CREAT_JOB_ERROR
+     CREAT_JOB_ERROR,
+     GET_JOBS_BEGIN,
+     GET_JOBS_SUCCESS
 } from "./actions";
 //import { stat } from "fs";
 
@@ -56,6 +58,10 @@ const initialState={
     jobType:'full-time',
     statusOptions:['interview', 'declined', 'pending'],
     status:'pending',
+    jobs: [],
+    totalJobs: 0,
+    numOfPages: 1,
+    page: 1,
 
 }
 
@@ -244,6 +250,34 @@ const AppProvider = ({children})=>{
             }
             clearAlert()
         }
+        const getJobs = async () =>{
+            let url = `/jobs`
+
+            dispatch({type:GET_JOBS_BEGIN})
+
+            try {
+                const {data} = await authFetch(url)
+                const {jobs, totalJobs, numOfPages} = data
+                dispatch({
+                    type:GET_JOBS_SUCCESS,
+                    payload:{
+                        jobs,
+                        totalJobs,
+                        numOfPages,
+                    },
+                })  
+            } catch (error) {
+                console.log(error.response)
+                // logoutUser()
+            }
+            clearAlert()
+        }
+       const setEditJob = (id)=>{
+        console.log(`set edit job : ${id}`)
+       }
+       const deleteJob = (id)=>{
+        console.log(`delete job : ${id}`)
+       }
 
 
 
@@ -261,7 +295,10 @@ const AppProvider = ({children})=>{
             updateUser,
             handleChange,
             clearValues,
-            createJob
+            createJob,
+            getJobs,
+            setEditJob,
+            deleteJob
             }}>{children}
         </AppContext.Provider>
     )
